@@ -1,0 +1,93 @@
+{smcl}
+{* 23Jan2004}{...}
+{hline}
+help for {hi:hl}{right:(Gareth Ambler & Tony Brady)}
+{hline}
+
+{title:Perform the Hosmer-Lemeshow test}
+
+{p 8 13}{cmd:hl} {it:depvar} {it:probability} [{cmd:if} {it:exp}] [{cmd:in} {it:range}]
+		[{cmd:,} {cmdab:g:roup(}{it:#}{cmd:)} {cmdab:cut:points(}{it:numlist}{cmd:)}
+		{cmd:q(}{it:varname}{cmd:)} {cmdab:sc:ale(}{it:str}{cmd:)} {cmdab:pl:ot}
+		{cmdab:ze:ro(}{it:#}{cmd:)} {cmdab:out:sample} {cmdab:ran:ge}
+		{cmd:noroc} {cmdab:notab:le} {cmdab:bypl:ot(}{it:varlist}{cmd:)} {cmd:fw} 
+		{cmdab:g1:opt(}{it:str}{cmd:)} {cmdab:g2:opt(}{it:str}{cmd:)} ]
+
+{p}{cmd:by} {it:...} {cmd::} may be used with {cmd:hl}; see help {help by}.
+
+{p}{cmd:hl} may be used after estimation by {cmd:logistic}, {cmd:logit},
+{cmd:probit} or {cmd:xtlogit}.
+
+{p}The whole dataset is used by default. Use {cmd:if} and {cmd:in} if you want
+to restrict the test to a subset of observations, e.g. the estimation sample.
+
+
+{title:Description}
+
+{p}{cmd:hl} performs the Hosmer-Lemeshow goodness of fit test and produces
+a table and, if requested, a plot of the observed and expected values under
+the test.  The test may be used as a post-estimation command or with any binary
+{it:depvar} and {it:probability}.
+
+
+{title:Options}
+
+{p 0 4}{cmd:group(}{it:#}{cmd:)} specifies the number of quantiles to be used
+to group the data for the test.  The default is {cmd:group(10)}.
+
+{p 0 4}{cmd:cutpoints(}{it:numlist}{cmd:)} specifies cutpoints on the probability
+scale to be used to group the data. This option has priority over {cmd:group}.
+
+{p 0 4}{cmd:q(}{it:varname}{cmd:)} specifies a grouping variable to use for
+the test.  This option has priority over {cmd:cutpoints} and {cmd:group}.
+
+{p 0 4}{cmd:plot} requests a scatter plot of observed vs mean expected
+proportions/percentages/log-odds for each group.
+
+{p 0 4}{cmd:scale(}{it:str}{cmd:)} may take the value {it:pr} (proportions),
+{it:pe} (percentages) or {it:lo} (log odds) and is used for graph axes and
+the results table.  The default is percentages.
+
+{p 0 4}{cmd:zero(}{it:#}{cmd:)} replaces zero probabilities with #.  This may
+be used if the statistic cannot be calculated because of zero values in the
+lowest group.
+
+{p 0 4}{cmd:outsample} increases the degrees of freedom of the test by 2
+to allow for the fact that the sample is not the estimation sample.
+
+{p 0 4}{cmd:range} requests the minimum and maximum predicted probabilities
+within each group to be reported in the results table.
+
+{p 0 4}{cmd:noroc} prevents the calculation of the ROC curve area.
+
+{p 0 4}{cmd:notable} suppresses the display of the results table.
+
+{p 0 4}{cmd:byplot} creates risk groups within the by-groups and draws separate 
+plots within a single graph. There is no need to specify {cmd:plot} with this option.
+
+{p 0 4}{cmd:fw} plots points plot proportional to the size of the risk groups. 
+There is no need to specify {cmd:plot} with this option.
+
+{p 0 4}{cmd:g1opt} passes graphical options to the scatter plot. There is no 
+need to specify {cmd:plot} with this option.
+
+{p 0 4}{cmd:g2opt} passes graphical options to the line plot. There is no need
+to specify {cmd:plot} with this option.
+
+
+{title:Examples}
+
+{p 4 8 2}{inp:. logit y x}{p_end}
+    {inp:. hl}{right:(Hosmer-Lemeshow C*(10) statistic){space 2}}
+{p 4 8 2}{inp:. predict p}{p_end}
+    {inp:. hl y p, group(20) range}{right:(Hosmer-Lemeshow C*(20) statistic){space 2}}
+    {inp:. hl y p, cut(0(.1)1)}{right:(Hosmer-Lemeshow H*(10) statistic){space 2}}
+{p 4 8 2}{inp:. hl y_new p, outsample plot}{p_end}
+
+
+{title:Also see}
+
+    Manual:  {hi:[R] logistic}
+
+{p 4 13 2}
+Online:  help for {help lfit}

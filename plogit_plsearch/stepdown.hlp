@@ -1,0 +1,81 @@
+.-
+help for ^stepdown^                              (Gareth Ambler and Tony Brady)
+.-
+
+Stepdown selection
+------------------
+
+    ^stepdown^ [term ...] [^if^ exp] [^in^ range]
+             [^,^ ^r2(^#^)^ ^lock^term1 ^ho^ld ^tr^ace ^nofi^ll]
+
+where term is either a varname or (varlist) (a varlist in parentheses).
+
+Weights are not supported
+
+^stepdown^ is a post estimation command; see help @est@.
+
+@predict@ after ^stepdown^ behaves the same as @predict@ after @regress@ (unless the 
+^hold^ option is used in which case it will behave as @predict@ after the 
+original estimation command; see help for the original estimation command 
+for details).
+
+
+Description
+-----------
+
+^stepdown^ is used after an estimation command to approximate the linear 
+predictor to a given level of accuracy (assessed using R2).
+
+By default ^stepdown^ uses the varlist from the estimation command, However if 
+any predictors are to be considered together they should be specified using 
+(varlist) (see @sw@ notation). The other predictors need not be specificied
+since ^stepdown^ will "fill in" the varlist (though see option ^nofill^).
+
+
+Options
+-------
+
+^r2(^#^)^ specifies the accuracy of the approximation where # lies between 0 and 1.
+    The default of 0 drops all predictors.
+
+^lockterm1^ specifies that the first term is to be included in the model and not
+    subjected to the selection criteria.
+
+^hold^ keeps the original model estimates in the estimates list. This allows
+    the user to repeat ^stepdown^ at a different level of accuracy. The default
+    is for the final approximate model to occupy the estimates list.
+	
+^trace^ gives more information about the various approximations considered.
+
+^nofill^ prevents ^stepdown^ from "filling in" the varlist. This option is useful
+    if the user wishes to specify a subset of the original varlist, and must be
+    used if any new variables are specified.
+
+
+Examples
+--------
+
+    . ^use auto^
+    . ^logit foreign weight length displ^
+    . ^stepdown^ 
+    
+    . ^regress mpg hdroom trunk weight length displ foreign^
+    . ^stepdown, r2(.9) hold^
+    . ^stepdown, r2(.7) hold^
+    . ^stepdown (weight length), r2(.5)^   
+
+
+Also see
+--------
+
+Harrell et al. 1998. Development of a clinical prediction model for an ordinal
+    outcome. Statistics in medicine. 909-944.
+    
+
+Author
+------
+Gareth Ambler
+Statistical Science, UCL, UK
+g.ambler@@ucl.ac.uk
+
+

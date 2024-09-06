@@ -1,0 +1,81 @@
+.-
+help for ^plsearch^                                               (Gareth Ambler)
+.-
+
+Penalised logistic regression search routine
+--------------------------------------------
+
+    ^plsearch^ depvar [indepvars] [weight] [^if^ exp] [^in^ range] [^, 
+        ^lam^bda^(^numlist^) las^so ^ini^t^(^#^) prev^ ^nopl^ot ^nost^op ^tr^ace
+        other_plogit_options]
+
+
+
+Description
+-----------
+^plsearch^ is a grid search routine find the "best" lambda for use with @plogit@.
+If a penalised model is required ^plsearch^ maximises an AIC criterion and if a
+lasso model is desired ^plsearch^ minimises the GCV. The grid points searched
+are supplied via the ^lambda^ option.
+
+Example
+----------
+
+plogit foreign price mpg length weight
+
+plsearch foreign price mpg length weight
+
+Options
+-------
+
+^lambda(^#^)^ is an ascending numlist that provides the grid points for the grid 
+    search. If no value is supplied ^lambda^ defaults to 0 and an unpenalised
+    model is fitted.
+    
+^lasso^ requests that a lasso model is fitted.
+
+^init^ allows initial values to be specified either as a vector - ^init(beta)^ -
+    or a list - ^init(_cons=-1 age=1.2)^ - in the same way as @ml init@. This is
+    only used to fit the first model in the search.  In addition ^init(prev)^
+	may be used to start the process from the previous fitted model.
+
+^prev^ instructs ^plogit^ to continue where it left off - in other words to
+    take initial values from e(b). This is not used on the first model fitted
+    (see ^init^).
+
+^noplot^ by default a plot of the grid search values is displayed. This option
+    suppresses it.
+    
+^nostop^ by default the routine finishes as soon as a maximum (AIC) or minimum
+    (GCV) is encountered. This option enables the routine to continue through
+    all the gris points.
+    
+^trace^ this allows the routine to display details of all the models fitted.
+
+^change^ reports the percentage change in the penalised estimates compared
+    to the usual ML estimates (as produced by @logit@).
+
+    
+References
+----------
+
+Le Cessie, S. and van Houwelingen, J. C. Ridge estimators in logistic 
+regression. Applied Statistics, 41:191-201 (1992).
+
+Tibshirani, R. Regression shrinkage and selection via the lasso.
+J. R. Statist. Soc. B, 58:267-288 (1996).
+
+Authors
+-------
+
+   Gareth Ambler, University College London, U.K.
+   g.ambler@@ucl.ac.uk
+
+   Tony Brady, MRC Clinical Trials Unit, U.K.
+   tbrady@@ctu.mrc.ac.uk
+
+Also see
+--------
+
+ Manual:  ^plogit^ ^[R] logit^
+On-line:  help for @logit@, @ml init@, @rxridge@ (if installed)

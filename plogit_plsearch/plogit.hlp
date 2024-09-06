@@ -1,0 +1,123 @@
+{smcl}
+{* 21dec2005}{...}
+{hline}
+help for {hi:plogit}{right:Tony Brady & Gareth Ambler}
+{hline}
+
+{title:Penalised logistic regression}
+
+{p 8 12 2}
+{cmd:plogit}
+{it:depvar}
+[{it:indepvars}]
+[{cmd:if} {it:exp}]
+[{cmd:in} {it:exp}]
+[{cmd:,}
+{cmdab:ch:ange}
+{cmdab:del:ta(}{it:#}{cmd:)}
+{cmdab:eps:ilon(}{it:#}{cmd:)}
+{cmdab:ini:t(}{it:#}{cmd:)}
+{cmdab:lam:bda(}{it:#}{cmd:)}
+{cmdab:las:so}
+{cmdab:l:evel(}{it:#}{cmd:)}
+{cmd:prev}
+{cmd:or}
+{cmd:nostd}
+]
+
+
+{title:Description}
+
+{p 4 4 2}
+{cmd:plogit} fits a logistic regression model with a likelihood penalised by
+lambda*B'PB where B is the beta vector of length c and P a c*c penalisation 
+matrix. See Le Cessie & van Houwelingen (1992) for details.
+By default P is a diagonal matrix with elements Var(xj) so that 
+the likelihood is penalised by lambda times the sum of standardised beta's
+squared.
+
+{p 4 4 2}
+An alternative penalisation term is lambda*sum_j(|bj|) which gives the "lasso"
+(least absolute shrinkage and selection operator) method
+of Tibshirani (1996). This has the effect of shrinking some coefficients exactly
+to zero, providing a form of variable selection.
+
+{title:Example}
+
+{p 4 4 2}
+{cmd:plogit} foreign price mpg length weight
+
+{p 4 4 2}
+{cmd:plsearch} foreign price mpg length weight
+
+{title:Options}
+
+{p 4 8 2}
+{cmd:change} reports the percentage change in the penalised estimates compared
+	  to the usual ML estimates (as produced by {cmd:logit}).
+
+{p 4 8 2}
+{cmd:lambda(}{it:#}{cmd:)} specifies the amount of penalisation to apply. The default is zero
+	  so that {cmd:plogit} will give the same answers as {help logit}. Higher values of
+	  lambda introduce more penalisation.
+
+{p 4 8 2}
+{cmd:lasso} requests the lasso penalty term. Due to computational difficulties an
+	  approximation is employed when a coefficient is in the region
+	  [-delta,delta]. Delta is .00001 (1e-5) by default but optionally can be 
+	  specified with {cmd:delta(}{it:#}{cmd:)}. Very small coefficient's - in the range
+	  [-epsilon,epsilon] - can be considered to be zero for practical purposes
+	  and are reported as such by {cmd:plogit}. Epsilon is 1e-6 by default but 
+	  optionally can be specified with {cmd:epsilon(}{it:#}{cmd:)}.
+
+{p 4 8 2}
+{cmd:init} allows initial values to be specified either as a vector - {cmd:init(beta)} -
+	  or a list - {cmd:init(_cons=-1 age=1.2)} - in the same way as {help ml init}.
+
+{p 4 8 2}
+{cmd:prev} instructs {cmd:plogit} to continue where it left off - in other words to
+	  take initial values from e(b).
+
+{p 4 8 2}
+{cmd:or} reports the estimated coefficients transformed to odds ratios, i.e., exp(b)
+	  rather than b.  Standard errors and confidence intervals are similarly
+	  transformed.  This option affects how results are displayed, not how they
+	  are estimated.  or may be specified at estimation or when redisplaying
+	  previously estimated results.
+
+{p 4 8 2}
+{cmd:nostd} by default continuous variables are penalised by their standardised 
+	  coefficients (i.e. the coefficient relating to a standard deviation
+	  increase in the variable). This option stops the standardisation and
+	  penalises coefficients on their original scale.
+
+
+{title:References}
+
+{p 4 4 2}
+Le Cessie, S. and van Houwelingen, J. C. 1992. Ridge estimators in logistic 
+regression. Applied Statistics, 41:191-201.
+
+{p 4 4 2}
+Tibshirani, R. 1996 Regression shrinkage and selection via the lasso.
+J. R. Statist. Soc. B, 58:267-288.
+
+
+{title:Authors}
+
+{p 4 4 2}
+Tony Brady, Sealed Envelope Ltd{break}
+contact@sealedenvelope.com
+
+{p 4 4 2}
+Gareth Ambler, University College London.{break}
+gareth@stats.ucl.ac.uk
+
+
+{title:Also see}
+
+{p 4 13 2}
+Manual: {bf:[R] logit}
+
+{p 4 13 2}
+Online:  {help logit}; {help ml init}; {help rxridge} (if installed}
