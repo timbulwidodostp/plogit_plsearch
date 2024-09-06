@@ -1,5 +1,12 @@
-d 'DEA': Data envelopment analysis
+d 'plogit': Penalised logistic regression and penalised logistic regression search routine Use plogit and plsearch With STATA 18
 d
-f dea.ado
-f dea.sthlp
-f coelli_table6.4.dta
+f hl.ado
+f hl.hlp
+f plogi_l1.ado
+f plogi_l2.ado
+f plogit.ado
+f plogit.hlp
+f plsearch.ado
+f plsearch.hlp
+f stepdown.ado
+f stepdown.hlp
