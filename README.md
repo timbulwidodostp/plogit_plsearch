@@ -1,6 +1,8 @@
 # plogit_plsearch
 Penalised logistic regression and penalised logistic regression search routine Use plogit and plsearch With STATA 18
 
+https://www.youtube.com/watch?v=JqVJ8beyNNI
+
 Olah Data Semarang
 
 WA : +6285227746673 (085227746673)
